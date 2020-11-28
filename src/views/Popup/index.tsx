@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { browser } from 'webextension-polyfill-ts';
 import '../App.css';
-import { List } from './List';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { List } from './components/List';
 
 const Popup: React.FC = () => {
   const [links, setLinks] = useState<string[]>([]);
@@ -22,11 +24,11 @@ const Popup: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        <List links={links}/>
-      </ul>
-    </div>
+    <React.Fragment>
+      <Header />
+      <List links={links} />
+      <Footer />
+    </React.Fragment>
   );
 }
 

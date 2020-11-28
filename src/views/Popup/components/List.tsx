@@ -12,7 +12,7 @@ const List: React.FC<Props> = ({ links }) => {
     if (dn) {
       try {
         displayName = decodeURI(dn[0]);
-      } catch {}
+      } catch { }
     }
 
     return displayName;
@@ -25,7 +25,7 @@ const List: React.FC<Props> = ({ links }) => {
   )
 
   const MapList = () => (
-    <>
+    <ul>
       {links.map((link) => {
         const displayName = getDisplayName(link);
         return (
@@ -33,9 +33,10 @@ const List: React.FC<Props> = ({ links }) => {
             <p>{displayName}</p>
             <button onClick={() => handleDownload(link)}>Download</button>
           </li>
-        )}
+        )
+      }
       )}
-    </>
+    </ul>
   )
 
   return (
