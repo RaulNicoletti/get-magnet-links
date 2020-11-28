@@ -1,20 +1,19 @@
 import { browser } from 'webextension-polyfill-ts';
-import { Message } from '../../types';
 
 const setBadgeText = (text: string) => browser.browserAction.setBadgeText({ text });
 
 async function sendMessage(tabId: number) {
   try {
-    const message: Message = 'background';
-    const response: string = await browser.tabs.sendMessage(tabId, message);
-    setBadgeText(response);
+    const response: string[] = await browser.tabs.sendMessage(tabId, '');
+    const text = response.length > 0 ? response.length.toString() : '';
+    setBadgeText(text);
   } catch (err) {
-    if (browser.runtime.lastError) {
+    if (browser.runtime.lastError) 
       console.log(browser.runtime.lastError.message);
-      setBadgeText('');
-    }
     else
       console.log(err);
+
+    setBadgeText('');
   }
 }
 

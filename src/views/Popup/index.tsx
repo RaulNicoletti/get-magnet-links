@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import '../App.css';
 import { browser } from 'webextension-polyfill-ts';
-import { Message } from '../../types';
+import '../App.css';
+import { List } from './List';
 
-function Popup() {
+const Popup: React.FC = () => {
   const [links, setLinks] = useState<string[]>([]);
 
   useEffect(() => {
     async function query() {
       try {
         const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-        const message: Message = 'popup';
-        const response: string[] = await browser.tabs.sendMessage(tabs[0].id!, message);
+        const response: string[] = await browser.tabs.sendMessage(tabs[0].id!, '');
         setLinks(response);
       } catch (err) {
         if (browser.runtime.lastError) setLinks([]);
@@ -20,14 +19,12 @@ function Popup() {
     }
 
     query();
-  }, [links]);
+  }, []);
 
   return (
     <div>
       <ul>
-        {links.map((link) => (
-          <li key={link}>{link}</li>
-        ))}
+        <List links={links}/>
       </ul>
     </div>
   );
