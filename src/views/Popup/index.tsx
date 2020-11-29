@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { List } from './components/List';
+import { ListLink } from './components/List';
 import { sendMessage } from './services';
 
 const Popup: React.FC = () => {
@@ -19,7 +19,7 @@ const Popup: React.FC = () => {
   return (
     <React.Fragment>
       <Header />
-      <List links={links} />
+      <ListLink links={links} />
       <Footer />
     </React.Fragment>
   );
