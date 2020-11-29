@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Footer: React.FC = () => {
   const classes = useStyles();
-  const github = 'https://github.com/RaulNicoletti';
+  const github = 'https://github.com/RaulNicoletti/get-magnet-links';
   const handleClick = () => window.open(github);
 
   return (
