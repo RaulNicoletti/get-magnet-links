@@ -1,23 +1,32 @@
 {
   "name": "get-magnet-links",
-  "version": "0.1.0",
+  "author": {
+    "name": "Raul Nicoletti"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RaulNicoletti/get-magnet-links"
+  },
+  "license": "MIT",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
+    "webextension-polyfill-ts": "^0.22.0"
+  },
+  "devDependencies": {
     "@raulnicoletti/react-scripts-extension": "0.4.1-beta",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1",
-    "webextension-polyfill-ts": "^0.22.0"
+    "typescript": "^4.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

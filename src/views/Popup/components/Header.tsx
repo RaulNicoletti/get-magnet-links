@@ -9,8 +9,7 @@ const useStyles = makeStyles(() =>
     root: {
       flexGrow: 1,
       minWidth: '200px',
-      marginBottom: '80px',
-
+      marginBottom: '60px',
     },
     appBar: {
       height: '60px',

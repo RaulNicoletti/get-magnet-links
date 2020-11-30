@@ -1,43 +1,28 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import CopyIcon from '@material-ui/icons/FileCopy';
-import Typography from '@material-ui/core/Typography';
-import { Suspense } from './Suspense';
+import Tooltip from '@material-ui/core/Tooltip';
 
 interface Props {
-  links: string[];
+  link: string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    fallback: {
-      width: 400,
-      height: 100,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    root: {
-      width: '100%',
-      maxWidth: 400,
-      backgroundColor: theme.palette.background.paper,
-    },
     icon: {
       display: 'flex',
       alignItems: 'flex-end',
-      justifyContent: 'space-between',
       padding: 15,
     },
     itemText: {
-      width: 250,
+      minWidth: 250,
+      maxWidth: 250,
     },
     text: {
       overflowWrap: 'break-word',
@@ -45,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ListLink: React.FC<Props> = ({ links }) => {
+const ListLink: React.FC<Props> = ({ link }) => {
   const classes = useStyles();
 
-  const getDisplayName = (link: string) => {
+  const getDisplayName = () => {
     const dn = link.match(/((?<=dn=)[^& ]*)/gmi);
     let displayName = 'Unkown name';
 
@@ -61,67 +46,40 @@ const ListLink: React.FC<Props> = ({ links }) => {
     return displayName;
   }
 
-  const handleDownload = (link: string) => window.open(link);
+  const handleDownload = () => window.open(link);
 
-  async function handleCopy(link: string) {
+  async function handleCopy() {
     await navigator.clipboard.writeText(link);
   }
 
-  const Fallback = () => {
-    if (links.length === 0) {
-      return (
-        <div className={classes.fallback}>
-          <Typography variant="subtitle1">
-            It looks like this page has no magnet links to list.
-          </Typography>
-        </div>
-      )
-    }
-
-    return (
-      <p>Carregando...</p>
-    )
-  }
-
-  const MapList = () => (
-    <List className={classes.root}>
-      {links.map((link) => {
-        const displayName = getDisplayName(link).replace('.', ' ');
-
-        return (
-          <React.Fragment>
-            <ListItem key={link} role={undefined} dense>
-              <div className={classes.itemText}>
-                <ListItemText className={classes.text} id={link} primary={displayName} />
-              </div>
-              <div className={classes.icon}>
-                <ListItemIcon >
-                  <IconButton edge="end" title="Copy the magnet link" onClick={() => handleCopy(link)}>
-                    <CopyIcon />
-                  </IconButton>
-                </ListItemIcon>
-                <ListItemSecondaryAction >
-                  <IconButton edge="end" title="Download" onClick={() => handleDownload(link)}>
-                    <DownloadIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </div>
-            </ListItem>
-            <Divider />
-          </React.Fragment>
-        );
-      }
-      )}
-    </List>
-  )
+  const displayName = getDisplayName();
 
   return (
     <React.Fragment>
-      <Suspense condition={links.length > 0} fallback={<Fallback />}>
-        <MapList />
-      </Suspense>
+      <ListItem key={link} role={undefined} dense>
+        <div className={classes.itemText}>
+          <ListItemText className={classes.text} id={link} primary={displayName} />
+        </div>
+        <div className={classes.icon}>
+          <ListItemIcon>
+            <Tooltip title="Copy">
+              <IconButton edge="end" onClick={handleCopy}>
+                <CopyIcon />
+              </IconButton>
+            </Tooltip>
+          </ListItemIcon>
+          <ListItemIcon>
+            <Tooltip title="Download">
+              <IconButton edge="end" onClick={handleDownload}>
+                <DownloadIcon />
+              </IconButton>
+            </Tooltip>
+          </ListItemIcon>
+        </div>
+      </ListItem>
+      <Divider />
     </React.Fragment>
   )
-}
+};
 
 export { ListLink };
