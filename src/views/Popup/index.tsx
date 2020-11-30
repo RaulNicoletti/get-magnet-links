@@ -28,10 +28,14 @@ const useStyles = makeStyles((theme: Theme) =>
 const Popup: React.FC = () => {
   const classes = useStyles();
   const [links, setLinks] = useState<string[]>([]);
+  const loading = 'Loading...';
+  const [message, setMessage] = useState(loading);
+  const notFound = 'It looks like this page has no magnet links to list.';
 
   useEffect(() => {
     async function getLinks() {
       const response = await sendMessage();
+      response.length > 0 ? setMessage(loading) : setMessage(notFound);
       setLinks(response);
     }
 
@@ -41,7 +45,7 @@ const Popup: React.FC = () => {
   const Fallback = () => (
     <div className={classes.fallback}>
       <Typography variant="subtitle1">
-        It looks like this page has no magnet links to list.
+        {message}
       </Typography>
     </div>
   )
